@@ -13,8 +13,6 @@ class Avaliador
         $ultimoLance = $lances[count($lances) - 1];
         $this->maiorValor = $ultimoLance->getValor();
 
-
-
     }
 
     /**
