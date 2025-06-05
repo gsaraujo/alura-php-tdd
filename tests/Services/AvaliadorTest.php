@@ -112,7 +112,7 @@ class AvaliadorTest extends TestCase
         $leilao->recebeLance(new Lance($maria, 2500));
 
         return [
-            [$leilao]
+           "ordem-crescente" => [$leilao]
         ];
         
     }
@@ -130,7 +130,7 @@ class AvaliadorTest extends TestCase
         $leilao->recebeLance(new Lance($ana, 1700));
 
         return [
-            [$leilao]
+            "ordem-decrescente" => [$leilao]
         ];
 
     }
@@ -148,7 +148,7 @@ class AvaliadorTest extends TestCase
         $leilao->recebeLance(new Lance($ana, 1700));
 
         return [
-            [$leilao]
+            "ordem-aleatoria" => [$leilao]
         ];
         
     }
