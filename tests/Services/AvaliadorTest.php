@@ -11,6 +11,14 @@ use PHPUnit\Framework\TestCase;
 
 class AvaliadorTest extends TestCase
 {
+
+    private $leiloeiro;
+    public function setUp(): void
+    {
+        $this->leiloeiro = new Avaliador();
+
+    }
+
     /**
      * @param Leilao $leilao
      * @return void
@@ -19,10 +27,9 @@ class AvaliadorTest extends TestCase
     /*public function testAvaliadorDeveEncontrarOMaiorValorDeLances(Leilao $leilao)
     {
 
-        $leiloeiro = new Avaliador();
-        $leiloeiro->avalia($leilao);
+        $this->leiloeiro->avalia($leilao);
 
-        $maiorValor = $leiloeiro->getMaiorValor();
+        $maiorValor = $this->leiloeiro->getMaiorValor();
 
         //$this->assertEquals(2500, $maiorValor);
         self::assertEquals(2500, $maiorValor);
@@ -39,10 +46,10 @@ class AvaliadorTest extends TestCase
      */
     public function testAvaliadorDeveEncontrarOMaiorValorDeLancesTriploDataProvider(Leilao $leilao)
     {
-        $leiloeiro = new Avaliador();
-        $leiloeiro->avalia($leilao);
 
-        $maiorValor = $leiloeiro->getMaiorValor();
+        $this->leiloeiro->avalia($leilao);
+
+        $maiorValor = $this->leiloeiro->getMaiorValor();
 
         //$this->assertEquals(2500, $maiorValor);
         self::assertEquals(2500, $maiorValor);
@@ -59,10 +66,9 @@ class AvaliadorTest extends TestCase
     public function testAvaliadorDeveEncontrarOMenorValorDeLances(Leilao $leilao)
     {
 
-        $leiloeiro = new Avaliador();
-        $leiloeiro->avalia($leilao);
+        $this->leiloeiro->avalia($leilao);
 
-        $menorValor = $leiloeiro->getMenorValor();
+        $menorValor = $this->leiloeiro->getMenorValor();
 
         //$this->assertEquals(2500, $menorValor);
         self::assertEquals(1700, $menorValor);
@@ -79,10 +85,10 @@ class AvaliadorTest extends TestCase
      */
     public function testAvaliadorDeveBuscar3MaioresValores(Leilao $leilao)
     {
-        $leiloeiro = new Avaliador();
-        $leiloeiro->avalia($leilao);
 
-        $maiores = $leiloeiro->getMaioresLances();
+        $this->leiloeiro->avalia($leilao);
+
+        $maiores = $this->leiloeiro->getMaioresLances();
 
         //self::assertEquals(3, count($maiores));
         self::assertCount(3, $maiores);
@@ -90,9 +96,9 @@ class AvaliadorTest extends TestCase
         self::assertEquals(2000, $maiores[1]->getValor());
         self::assertEquals(1700, $maiores[2]->getValor());
 
-
     }
 
+    // --------------- DATA -----------------
     public function leilaoEmOrdemCrescente()
     {
         $leilao = new Leilao('Fiat 147 0KM');
