@@ -18,9 +18,55 @@ class LeilaoTest extends TestCase
         $leilao->recebeLance(new Lance($ana,1500));
 
         self::assertCount(1, $leilao->getLances());
-        self:self::assertEquals(1000,$leilao->getLances()[0]->getValor());
+        self::assertEquals(1000,$leilao->getLances()[0]->getValor());
 
     }
+
+    /**
+     * @param int $qtdLances
+     * @param Leilao $leilao
+     * @param int $ultimoLance
+     * @return void
+     * @dataProvider geraMultiplosLancesMesmoUsuario
+     */
+    public function testLeilaoNaoPermiteMaisQueCincoLancesMesmoUsuario(int $qtdLances,
+                                                                       Leilao $leilao,
+                                                                       int $ultimoLance)
+    {
+
+        self::assertCount($qtdLances, $leilao->getLances());
+        self::assertEquals($ultimoLance, $leilao->getLances()[array_key_last($leilao->getLances())]->getValor());
+
+    }
+
+    public function testLeilaoNaoDeveAceitarMaisDe5LancesPorUsuario()
+    {
+        $leilao = new Leilao('Brasília Amarela');
+        $joao = new Usuario('Joao');
+        $maria = new Usuario('Maria');
+
+        $leilao->recebeLance(new Lance($joao,1000));
+        $leilao->recebeLance(new Lance($maria,1500));
+
+        $leilao->recebeLance(new Lance($joao,2000));
+        $leilao->recebeLance(new Lance($maria,2500));
+
+        $leilao->recebeLance(new Lance($joao,3000));
+        $leilao->recebeLance(new Lance($maria,3500));
+
+        $leilao->recebeLance(new Lance($joao,4000));
+        $leilao->recebeLance(new Lance($maria,4500));
+
+        $leilao->recebeLance(new Lance($joao,5000));
+        $leilao->recebeLance(new Lance($maria,5500));
+
+        $leilao->recebeLance(new Lance($joao,6000));
+
+        self::assertCount(10, $leilao->getLances());
+        self::assertEquals(5500,$leilao->getLances()[array_key_last($leilao->getLances())]->getValor());
+        
+    }
+
     /**
      * @param int $qtdLances
      * @param Leilao $leilao
@@ -57,6 +103,24 @@ class LeilaoTest extends TestCase
         return [
             '2-lances' => [2,$leilaoCom2Lances,[1000,2000]],
             '1-lance' => [1,$leilaoCom1Lance,[5000]],
+        ];
+
+    }
+
+    public function geraMultiplosLancesMesmoUsuario()
+    {
+        $maria = new Usuario('Maria');
+        $joao = new Usuario('Joao');
+
+        $leilao = new Leilao('Fiat 147 0KM');
+
+        for ($i=1; $i < 7; $i++) {
+            $leilao->recebeLance(new Lance($maria, 1000*$i));
+            $leilao->recebeLance(new Lance($joao, 2000*$i));
+        }
+
+        return [
+            '6-lances' => [10,$leilao,10000],
         ];
 
     }
